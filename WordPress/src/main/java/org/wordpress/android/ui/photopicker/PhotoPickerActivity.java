@@ -255,7 +255,7 @@ public class PhotoPickerActivity extends AppCompatActivity
                                                  @Override
                                                  public void doNext(Uri uri) {
                                                      mFeaturedImageHelper
-                                                             .queueFeaturedImageForUpload(PhotoPickerActivity.this,
+                                                             .queueFeaturedImageForUpload(
                                                                      mLocalPostId, mSite, uri, mimeType);
                                                      Intent intent = new Intent()
                                                              .putExtra(EXTRA_MEDIA_QUEUED, true);

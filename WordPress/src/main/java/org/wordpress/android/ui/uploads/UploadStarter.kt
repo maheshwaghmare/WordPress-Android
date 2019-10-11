@@ -1,6 +1,5 @@
 package org.wordpress.android.ui.uploads
 
-import android.content.Context
 import androidx.lifecycle.Lifecycle.Event
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
@@ -46,10 +45,6 @@ import kotlin.coroutines.CoroutineContext
 @Singleton
 @OpenForTesting
 class UploadStarter @Inject constructor(
-    /**
-     * The Application context
-     */
-    private val context: Context,
     private val dispatcher: Dispatcher,
     private val postStore: PostStore,
     private val siteStore: SiteStore,
@@ -167,7 +162,6 @@ class UploadStarter @Inject constructor(
                                 )
                         )
                         uploadServiceFacade.uploadPost(
-                                context = context,
                                 post = post,
                                 trackAnalytics = false
                         )

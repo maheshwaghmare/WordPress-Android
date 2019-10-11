@@ -406,12 +406,12 @@ public class EditPostSettingsFragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case CHOOSE_FEATURED_IMAGE_MENU_ID:
-                mFeaturedImageHelper.cancelFeaturedImageUpload(getContext(), getSite(), getPost(), false);
+                cancelFeaturedImageUpload(getSite(), getPost());
                 launchFeaturedMediaPicker();
                 return true;
             case REMOVE_FEATURED_IMAGE_UPLOAD_MENU_ID:
             case REMOVE_FEATURED_IMAGE_MENU_ID:
-                mFeaturedImageHelper.cancelFeaturedImageUpload(getContext(), getSite(), getPost(), false);
+                cancelFeaturedImageUpload(getSite(), getPost());
                 clearFeaturedImage();
                 return true;
             case RETRY_FEATURED_IMAGE_UPLOAD_MENU_ID:
@@ -422,11 +422,28 @@ public class EditPostSettingsFragment extends Fragment {
         }
     }
 
+    private void cancelFeaturedImageUpload(SiteModel site, PostModel post) {
+        if (site != null && post != null) {
+            mFeaturedImageHelper.cancelFeaturedImageUpload(site, post, false);
+        } else {
+            AppLog.w(T.MEDIA,
+                    "SiteModel(isNull= " + (site == null) + ") or PostModel(isNull = " + (post
+                    == null) + ") is null - feauted image upload not canceled.");
+        }
+    }
+
     private void retryFeaturedImageUpload() {
-        MediaModel mediaModel =
-                mFeaturedImageHelper.retryFeaturedImageUpload(getContext(), getSite(), getPost());
-        if (mediaModel == null) {
-            clearFeaturedImage();
+        SiteModel site = getSite();
+        PostModel post = getPost();
+        if (site != null && post != null) {
+            MediaModel mediaModel = mFeaturedImageHelper.retryFeaturedImageUpload(site, post);
+            if (mediaModel == null) {
+                clearFeaturedImage();
+            }
+        } else {
+            AppLog.w(T.MEDIA,
+                    "SiteModel(isNull= " + (site == null) + ") or PostModel(isNull = " + (post == null)
+                    + ") is null - retrying featured image upload failed.");
         }
     }
 
@@ -866,8 +883,13 @@ public class EditPostSettingsFragment extends Fragment {
         if (!isAdded() || post == null || site == null || context == null) {
             return;
         }
+
+        // Get max width/height for photon thumbnail - we load a smaller image so it's loaded quickly
+        int maxDimen = (int) context.getResources().getDimension(R.dimen.post_settings_featured_image_height_min);
+
+
         final FeaturedImageData currentFeaturedImageState =
-                mFeaturedImageHelper.createCurrentFeaturedImageState(context, site, post);
+                mFeaturedImageHelper.createCurrentFeaturedImageState(site, post, maxDimen);
 
         FeaturedImageState uiState = currentFeaturedImageState.getUiState();
         updateFeaturedImageViews(currentFeaturedImageState.getUiState());

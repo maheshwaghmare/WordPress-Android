@@ -114,7 +114,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, times(draftPosts.size)).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -137,7 +136,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, times(0)).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -159,7 +157,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, times(draftPosts.size)).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -181,7 +178,6 @@ class UploadStarterTest {
         // Then
         val expectedUploadPostExecutions = sitesAndDraftPosts.getValue(site).size
         verify(uploadServiceFacade, times(expectedUploadPostExecutions)).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -210,7 +206,6 @@ class UploadStarterTest {
         // subtract - 1 as we've returned isPublishable = false for the first post of the site
         val expectedUploadPostExecutions = sitesAndDraftPosts.getValue(site).size - 1
         verify(uploadServiceFacade, times(expectedUploadPostExecutions)).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -243,7 +238,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, times(expectedUploadedPosts.size)).uploadPost(
-                context = any(),
                 post = argWhere { expectedUploadedPosts.contains(it) },
                 trackAnalytics = any()
         )
@@ -275,7 +269,6 @@ class UploadStarterTest {
         // Then
         // Make sure the uploadPost method is never called
         verify(uploadServiceFacade, never()).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -293,7 +286,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, never()).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -311,7 +303,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, times(1)).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -333,7 +324,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, never()).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -355,7 +345,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, times(1)).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -376,7 +365,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, never()).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -396,7 +384,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, never()).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -419,7 +406,6 @@ class UploadStarterTest {
 
         // Then
         verify(uploadServiceFacade, never()).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
@@ -456,7 +442,6 @@ class UploadStarterTest {
         uploadStore: UploadStore = createMockedUploadStore(0),
         dispatcher: Dispatcher = mock()
     ) = UploadStarter(
-            context = mock(),
             postStore = postStore,
             siteStore = siteStore,
             bgDispatcher = Dispatchers.Unconfined,

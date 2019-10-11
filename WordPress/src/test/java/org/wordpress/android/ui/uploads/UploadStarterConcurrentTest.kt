@@ -59,14 +59,12 @@ class UploadStarterConcurrentTest {
 
         // Then
         verify(uploadServiceFacade, times(draftPosts.size)).uploadPost(
-                context = any(),
                 post = any(),
                 trackAnalytics = any()
         )
     }
 
     private fun createUploadStarter(uploadServiceFacade: UploadServiceFacade) = UploadStarter(
-            context = mock(),
             postStore = postStore,
             siteStore = mock(),
             bgDispatcher = Dispatchers.Default,
